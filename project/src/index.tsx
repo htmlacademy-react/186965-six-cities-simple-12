@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
 const AppSettings = {
-  UserEmail: 'Oliver.conner@gmail.com'
+  UserEmail: 'Oliver.conner@gmail.com',
+  OffersAmount: 32
 } as const;
 
 
@@ -13,6 +14,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App userEmail={AppSettings.UserEmail} />
+    <App userEmail={AppSettings.UserEmail} offersAmount={AppSettings.OffersAmount} />
   </React.StrictMode>,
 );

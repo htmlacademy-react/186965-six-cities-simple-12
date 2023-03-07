@@ -1,12 +1,13 @@
-import MainPage from '../../pages/main-page';
+import MainPage from '../../pages/main-page/main-page';
 
 type AppProps = {
   userEmail: string;
+  offersAmount: number;
 }
 
-function App({ userEmail }: AppProps): JSX.Element {
+function App({ userEmail, offersAmount }: AppProps): JSX.Element {
   return (
-    <MainPage userEmail={userEmail} />
+    <MainPage userEmail={userEmail} offersAmount={offersAmount} />
   );
 }
 
