@@ -1,5 +1,13 @@
-function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+import MainPage from '../../pages/main-page';
+
+type AppProps = {
+  userEmail: string;
+}
+
+function App({ userEmail }: AppProps): JSX.Element {
+  return (
+    <MainPage userEmail={userEmail} />
+  );
 }
 
 export default App;
