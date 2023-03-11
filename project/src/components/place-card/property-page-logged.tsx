@@ -1,11 +1,11 @@
-import MainPageHeader from '../main-page/main-page-header';
+import MainPageHeader from '../../pages/main-page/main-page-header';
 
 type MainPageHeaderProps = {
   userEmail: string;
 }
 
 
-function PageLogged({ userEmail }: MainPageHeaderProps): JSX.Element {
+function PropertyPageLogged({ userEmail }: MainPageHeaderProps): JSX.Element {
   return (
     <>
       <MainPageHeader userEmail={userEmail} />
@@ -292,4 +292,4 @@ function PageLogged({ userEmail }: MainPageHeaderProps): JSX.Element {
 }
 
 
-export default PageLogged;
+export default PropertyPageLogged;
