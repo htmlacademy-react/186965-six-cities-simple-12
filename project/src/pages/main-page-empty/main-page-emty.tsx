@@ -1,4 +1,6 @@
 import MainPageHeader from '../main-page/main-page-header';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 type MainPageHeaderProps = {
   userEmail: string;
@@ -8,6 +10,7 @@ type MainPageHeaderProps = {
 function MainPageEmpty({ userEmail }: MainPageHeaderProps): JSX.Element {
   return (
     <>
+      <Helmet title='No places found'></Helmet>
       <MainPageHeader userEmail={userEmail} />
 
       <main className='page__main page__main--index page__main--index-empty'>
@@ -16,34 +19,34 @@ function MainPageEmpty({ userEmail }: MainPageHeaderProps): JSX.Element {
           <section className='locations container'>
             <ul className='locations__list tabs__list'>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <Link className='locations__item-link tabs__item' to='#'>
                   <span>Paris</span>
-                </a>
+                </Link>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <Link className='locations__item-link tabs__item' to='#'>
                   <span>Cologne</span>
-                </a>
+                </Link>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <Link className='locations__item-link tabs__item' to='#'>
                   <span>Brussels</span>
-                </a>
+                </Link>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item'>
+                <Link className='locations__item-link tabs__item' to=''>
                   <span>Amsterdam</span>
-                </a>
+                </Link>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <Link className='locations__item-link tabs__item' to='#'>
                   <span>Hamburg</span>
-                </a>
+                </Link>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active' href='#'>
+                <Link className='locations__item-link tabs__item tabs__item--active' to='#'>
                   <span>Dusseldorf</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </section>
