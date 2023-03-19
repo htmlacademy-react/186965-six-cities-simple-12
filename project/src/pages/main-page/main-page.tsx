@@ -1,15 +1,18 @@
 import MainPageHeader from './main-page-header';
-import PlaceCard from '../main-page/place-card';
+import PlaceCardList from '../main-page/place-cards-list';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { CardOffers } from '../../types/offer';
 
 
 type MainPageProps = {
   userEmail: string;
   offersAmount: number;
+  offers: CardOffers;
+
 };
 
-function MainPage({ userEmail, offersAmount }: MainPageProps): JSX.Element {
+function MainPage({ userEmail, offersAmount, offers }: MainPageProps): JSX.Element {
   return (
     <>
       <Helmet title='Find a place to stay'></Helmet>
@@ -74,11 +77,7 @@ function MainPage({ userEmail, offersAmount }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                <PlaceCardList offers={offers} />
               </div>
             </section>
             <div className='cities__right-section'>
