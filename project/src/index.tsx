@@ -5,7 +5,8 @@ import { offers } from './mock/offers';
 
 const AppSettings = {
   UserEmail: 'Oliver.conner@gmail.com',
-  OffersAmount: 32
+  Offers: offers,
+  OffersAmount: offers.length,
 } as const;
 
 

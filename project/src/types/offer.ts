@@ -2,7 +2,7 @@ type HouseType = 'Apartment' | 'Room' | 'House' | 'Hotel';
 
 export interface CardOffer {
   id: number;
-  images: string[];
+  image: string;
   isPremium: boolean;
   price: number;
   title: string;

@@ -1,11 +1,11 @@
 import { CardOffers } from '../types/offer';
 
-const IMAGE_START_URL = '../../public/img/';
+const IMAGE_START_URL = 'img/';
 
 export const offers: CardOffers = [
   {
     id: 1,
-    images: [`${IMAGE_START_URL}apartment-01.jpg`, `${IMAGE_START_URL}apartment-02.jpg`, `${IMAGE_START_URL}apartment-03.jpg`],
+    image: `${IMAGE_START_URL}apartment-01.jpg`,
     isPremium: true,
     price: 10,
     title: 'Beautiful & luxurious apartment',
@@ -14,7 +14,7 @@ export const offers: CardOffers = [
   },
   {
     id: 2,
-    images: [`${IMAGE_START_URL}apartment-01.jpg`, `${IMAGE_START_URL}apartment-02.jpg`, `${IMAGE_START_URL}apartment-03.jpg`],
+    image:  `${IMAGE_START_URL}apartment-02.jpg`,
     isPremium: false,
     price:  20,
     title: 'Beautiful & luxurious room',
@@ -23,7 +23,7 @@ export const offers: CardOffers = [
   },
   {
     id: 3,
-    images: [`${IMAGE_START_URL}apartment-01.jpg`, `${IMAGE_START_URL}apartment-02.jpg`, `${IMAGE_START_URL}apartment-03.jpg`],
+    image: `${IMAGE_START_URL}apartment-03.jpg`,
     isPremium: true,
     price: 30,
     title: 'Beautiful & luxurious house',
@@ -32,7 +32,7 @@ export const offers: CardOffers = [
   },
   {
     id: 4,
-    images: [`${IMAGE_START_URL}apartment-01.jpg`, `${IMAGE_START_URL}apartment-02.jpg`, `${IMAGE_START_URL}apartment-03.jpg`],
+    image: `${IMAGE_START_URL}apartment-01.jpg`,
     isPremium: false,
     price: 40,
     title: 'Beautiful & luxurious hotel',

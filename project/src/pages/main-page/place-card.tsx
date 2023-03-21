@@ -1,25 +1,25 @@
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CardOffer } from '../../types/offer';
+// import { AppRoute } from '../../const/conts';
 
 type PlaceCardProps = {
   offer: CardOffer;
+  id: number;
+  onMouseOverHandler: (id: number) => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { offer } = props;
-  const { images, isPremium, price, title, houseType, id } = offer;
+  const { offer, onMouseOverHandler } = props;
+  const { image, isPremium, price, title, houseType, id } = offer;
+
 
   return (
-    <article className='cities__card place-card'>
-      <div className='place-card__mark'>
-        <span>Premium</span>
-      </div>
+    <article className='cities__card place-card' id={id.toString()} onMouseOver={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler}>
+      {isPremium ? <div className='place-card__mark'><span>Premium</span></div> : ''}
       <div className='cities__image-wrapper place-card__image-wrapper'>
-        <Link to='#'>
-          {
-            images.map((image) => <img className='place-card__image' src={image} width='260' height='200' alt='Place image' key={id} />)
-          }
-
+        <Link to={'/offer/$id'}>
+          <img className='place-card__image' src={image} width='260' height='200' alt='{title' />
         </Link>
       </div>
       <div className='place-card__info'>
@@ -33,15 +33,15 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
             <span style={{ width: '80%' }}></span>
-            {isPremium ? <span className='visually-hidden'>Rating</span> : ''}
+            <span className='visually-hidden'>Rating</span>
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link to='#'>{title}</Link>
+          <Link to={'/offer/$id'}>{title}</Link>
         </h2>
         <p className='place-card__type'>{houseType}</p>
       </div>
-    </article>
+    </article >
   );
 }
 

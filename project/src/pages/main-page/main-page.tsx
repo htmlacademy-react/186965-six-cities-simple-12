@@ -7,12 +7,12 @@ import { CardOffers } from '../../types/offer';
 
 type MainPageProps = {
   userEmail: string;
-  offersAmount: number;
   offers: CardOffers;
+  offersAmount: number;
 
 };
 
-function MainPage({ userEmail, offersAmount, offers }: MainPageProps): JSX.Element {
+function MainPage({ userEmail, offers, offersAmount }: MainPageProps): JSX.Element {
   return (
     <>
       <Helmet title='Find a place to stay'></Helmet>
