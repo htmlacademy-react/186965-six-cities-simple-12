@@ -5,23 +5,26 @@ import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login/login';
 import NoPage from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
-import PropertyPageLogged from '../place-card/property-page-logged';
+import OfferCard from '../place-card/offer-card';
+import { CardOffers } from '../../types/offer';
 
 type AppProps = {
   userEmail: string;
   offersAmount: number;
+  offers: CardOffers;
+
 }
 
-function App({ userEmail, offersAmount }: AppProps): JSX.Element {
+function App({ userEmail, offersAmount, offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage userEmail={userEmail} offersAmount={offersAmount} />} />
+          <Route path={AppRoute.Main} element={<MainPage userEmail={userEmail} offersAmount={offersAmount} offers={offers} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Offer} element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <PropertyPageLogged userEmail={userEmail} />
+              <OfferCard userEmail={userEmail} />
             </PrivateRoute>
           }
           />
