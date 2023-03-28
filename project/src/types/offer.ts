@@ -8,6 +8,9 @@ export interface CardOffer {
   title: string;
   houseType: HouseType;
   rating: number;
+  lat: number;
+  lng: number;
+  city: string;
 }
 
 

@@ -6,7 +6,6 @@ type MainPageHeaderProps = {
 
 }
 
-
 function OfferCard({ userEmail }: MainPageHeaderProps): JSX.Element {
   return (
     <>

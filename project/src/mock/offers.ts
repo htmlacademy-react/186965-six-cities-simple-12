@@ -11,6 +11,9 @@ export const offers: CardOffers = [
     title: 'Beautiful & luxurious apartment',
     houseType: 'Apartment',
     rating: 4.7,
+    lat: 52.3909553943508,
+    lng: 4.85309666406198,
+    city: 'Amsterdam'
   },
   {
     id: 2,
@@ -20,6 +23,9 @@ export const offers: CardOffers = [
     title: 'Beautiful & luxurious room',
     houseType: 'Room',
     rating: 4.8,
+    lat: 52.3609553943508,
+    lng: 4.85309666406198,
+    city: 'New-York'
   },
   {
     id: 3,
@@ -29,6 +35,9 @@ export const offers: CardOffers = [
     title: 'Beautiful & luxurious house',
     houseType: 'House',
     rating: 4.9,
+    lat: 52.3909553943508,
+    lng: 4.929309666406198,
+    city: 'London'
   },
   {
     id: 4,
@@ -38,6 +47,9 @@ export const offers: CardOffers = [
     title: 'Beautiful & luxurious hotel',
     houseType: 'Hotel',
     rating: 5.0,
+    lat: 52.3809553943508,
+    lng: 4.939309666406198,
+    city: 'Oslo'
   }
 ];
 
