@@ -1,7 +1,10 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { offers } from './mock/offers';
+import { CITY } from './mock/city';
+
 
 const AppSettings = {
   UserEmail: 'Oliver.conner@gmail.com',
@@ -16,6 +19,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App userEmail={AppSettings.UserEmail} offersAmount={AppSettings.OffersAmount} offers={offers} />
+    <App userEmail={AppSettings.UserEmail} offersAmount={AppSettings.OffersAmount} offers={offers} points={offers} city={CITY} />
   </React.StrictMode>,
 );

@@ -1,18 +1,31 @@
-import MainPageHeader from './main-page-header';
-import PlaceCardList from '../main-page/place-cards-list';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import MainPageHeader from './main-page-header';
+import PlaceCardList from '../main-page/place-cards-list';
+import Map from '../../components/map/map';
 import { CardOffers } from '../../types/offer';
+import { City } from '../../types/city';
 
 
 type MainPageProps = {
   userEmail: string;
   offers: CardOffers;
   offersAmount: number;
-
+  city: City;
+  points: CardOffers;
 };
 
-function MainPage({ userEmail, offers, offersAmount }: MainPageProps): JSX.Element {
+function MainPage({ userEmail, offers, offersAmount, city, points }: MainPageProps): JSX.Element {
+
+  // const [selectedPoint, setSelectedPoint] = useState<CardOffer | undefined>(undefined);
+
+  // const onListItemHover = (listItemName: string) => {
+  //   const currentPoint = points.find((point) => point.city === listItemName);
+
+  //   setSelectedPoint(currentPoint);
+  // };
+
   return (
     <>
       <Helmet title='Find a place to stay'></Helmet>
@@ -81,7 +94,9 @@ function MainPage({ userEmail, offers, offersAmount }: MainPageProps): JSX.Eleme
               </div>
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <section className='cities__map map'>
+                <Map city={city} points={points} />
+              </section>
             </div>
           </div>
         </div>
