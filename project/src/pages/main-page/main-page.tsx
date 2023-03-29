@@ -3,18 +3,20 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import MainPageHeader from './main-page-header';
 import PlaceCardList from '../main-page/place-cards-list';
-import { CardOffers, CardOffer } from '../../types/offer';
 import Map from '../../components/map/map';
+import { CardOffers } from '../../types/offer';
+import { City } from '../../types/city';
 
 
 type MainPageProps = {
   userEmail: string;
   offers: CardOffers;
   offersAmount: number;
-  city: CardOffer;
+  city: City;
+  points: CardOffers;
 };
 
-function MainPage({ userEmail, offers, offersAmount, city }: MainPageProps): JSX.Element {
+function MainPage({ userEmail, offers, offersAmount, city, points }: MainPageProps): JSX.Element {
 
   // const [selectedPoint, setSelectedPoint] = useState<CardOffer | undefined>(undefined);
 
@@ -93,7 +95,7 @@ function MainPage({ userEmail, offers, offersAmount, city }: MainPageProps): JSX
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'>
-                <Map city={city} points={offers}></Map>
+                <Map city={city} points={points} />
               </section>
             </div>
           </div>

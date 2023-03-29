@@ -10,7 +10,7 @@ export interface CardOffer {
   rating: number;
   lat: number;
   lng: number;
-  city: string;
+
 }
 
 
