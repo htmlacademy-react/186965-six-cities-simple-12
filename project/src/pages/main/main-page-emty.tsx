@@ -1,4 +1,4 @@
-import MainPageHeader from '../main-page/main-page-header';
+import MainPageHeader from '../../components/header/header';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 

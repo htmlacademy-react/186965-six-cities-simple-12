@@ -1,6 +1,6 @@
 import { CardOffers } from '../types/offer';
 
-const IMAGE_START_URL = 'img/';
+export const IMAGE_START_URL = 'img/';
 
 export const offers: CardOffers = [
   {

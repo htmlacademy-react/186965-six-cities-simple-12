@@ -1,8 +1,8 @@
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import MainPageHeader from './main-page-header';
-import PlaceCardList from '../main-page/place-cards-list';
+import MainPageHeader from '../../components/header/header';
+import PlaceCardList from '../../components/offer-list/place-cards-list';
 import Map from '../../components/map/map';
 import { CardOffers } from '../../types/offer';
 import { City } from '../../types/city';
@@ -14,9 +14,12 @@ type MainPageProps = {
   offersAmount: number;
   city: City;
   points: CardOffers;
+  className: string;
+
 };
 
-function MainPage({ userEmail, offers, offersAmount, city, points }: MainPageProps): JSX.Element {
+function MainPage(props: MainPageProps): JSX.Element {
+  const { userEmail, offers, offersAmount, city, points, className } = props;
 
   // const [selectedPoint, setSelectedPoint] = useState<CardOffer | undefined>(undefined);
 
@@ -90,7 +93,7 @@ function MainPage({ userEmail, offers, offersAmount, city, points }: MainPagePro
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList offers={offers} />
+                <PlaceCardList offers={offers} className={className} />
               </div>
             </section>
             <div className='cities__right-section'>
