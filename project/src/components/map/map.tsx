@@ -1,16 +1,17 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/useMap';
-import { City } from '../../types/city';
-import { URL_MARKER_DEFAULT } from '../../const/const';
-import { CardOffers } from '../../types/offer';
+// import { City } from '../../types/city';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
+import { Offer } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 
 type MapProps = {
-  city: City;
-  points: CardOffers;
-  // selectedPoint: Point | undefined;
+  // city: City;
+  // offers: Offers;
+  selectedPoint: Offer | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -19,32 +20,38 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-// const currentCustomIcon = new Icon({
-//   iconUrl: URL_MARKER_CURRENT,
-//   iconSize: [40, 40],
-//   iconAnchor: [20, 40]
-// });
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
+});
 
 function Map(props: MapProps): JSX.Element {
-  const { city, points } = props;
+  const { selectedPoint } = props;
+  const offers = useAppSelector((state) => state.offers);
+
+  const location = useAppSelector((state) => state.city);
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, location);
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      offers.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.city.location.lat,
+          lng: point.city.location.lng
         });
 
         marker
-          .setIcon(defaultCustomIcon)
+          .setIcon(selectedPoint !== undefined && point.title === selectedPoint.title
+            ? currentCustomIcon
+            : defaultCustomIcon)
           .addTo(map);
       });
     }
-  }, [map, points]);
+  }, [map, offers, selectedPoint]);
+
 
   return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;
 }

@@ -1,17 +1,31 @@
 type HouseType = 'Apartment' | 'Room' | 'House' | 'Hotel';
 
-export interface CardOffer {
+export interface Offer {
   id: number;
-  image: string;
-  isPremium: boolean;
-  price: number;
   title: string;
+  previewImage: string;
+  description: string;
+  isPremium: boolean;
   houseType: HouseType;
   rating: number;
-  lat: number;
-  lng: number;
-
+  bedrooms: number;
+  maxPeople: number;
+  price: number;
+  conveniences: string[];
+  hostInfo: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
+  city : {
+    name: string;
+    location : {
+      lat: number;
+      lng:number;
+    };
+  };
 }
 
 
-export type CardOffers = CardOffer[];
+export type Offers = Offer[];
