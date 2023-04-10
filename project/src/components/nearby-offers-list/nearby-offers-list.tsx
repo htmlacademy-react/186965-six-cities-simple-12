@@ -1,18 +1,18 @@
 
-import { useState } from 'react';
-import { CardOffers } from '../../types/offer';
+
+import { Offers } from '../../types/offer';
 import NearbyPlaceCard from '../nearby-offers/nearby-offers';
 
 type NearbyPlaceCardsListProps = {
-  offers: CardOffers;
+  offers: Offers;
   className: string;
+  onMouseOverHandler: (id: number) => void;
 }
 
-function NearbyPlaceCardList({ offers, className }: NearbyPlaceCardsListProps): JSX.Element {
-  const [offerId, setOfferId] = useState(0);
+function NearbyPlaceCardList({ offers, className, onMouseOverHandler }: NearbyPlaceCardsListProps): JSX.Element {
   return (
     <>
-      {offers.map((offer) => <NearbyPlaceCard offer={offer} key={offer.id} id={offerId} onMouseOverHandler={() => setOfferId(offer.id)} className={className} />)}
+      {offers.map((offer) => <NearbyPlaceCard offer={offer} key={offer.id} id={offer.id} onMouseOverHandler={onMouseOverHandler} className={className} />)}
     </>
   );
 }

@@ -1,20 +1,22 @@
-import { useState } from 'react';
+
 import PlaceCard from '../offer-card/place-card';
-import { CardOffers } from '../../types/offer';
+import { Offers } from '../../types/offer';
 
 
 type PlaceCardsListProps = {
-  offers: CardOffers;
+  offers: Offers;
   className: string;
+  onMouseOverHandler: (id: number) => void;
+
 }
 
 function PlaceCardsList(props: PlaceCardsListProps): JSX.Element {
-  const { offers, className } = props;
-  const [offerId, setOfferId] = useState(0);
+  const { offers, className, onMouseOverHandler } = props;
+  // const [offerId, setOfferId] = useState(0);
 
   return (
     <>
-      {offers.map((offer) => <PlaceCard offer={offer} key={offer.id} id={offerId} onMouseOverHandler={() => setOfferId(offer.id)} className={`cities__card ${className}`} />)}
+      {offers.map((offer) => <PlaceCard offer={offer} key={offer.id} id={offer.id} onMouseOverHandler={onMouseOverHandler} className={`cities__card ${className}`} />)}
     </>
   );
 }

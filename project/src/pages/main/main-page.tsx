@@ -1,82 +1,54 @@
-// import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+// import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import MainPageHeader from '../../components/header/header';
 import PlaceCardList from '../../components/offer-list/place-cards-list';
 import Map from '../../components/map/map';
-import { CardOffers } from '../../types/offer';
-import { City } from '../../types/city';
+import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
+// import { City } from '../../types/city';
+import CitiesList from '../../components/cities-list/cities-list';
+import { citiesNames } from '../../const/const';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 
 type MainPageProps = {
   userEmail: string;
-  offers: CardOffers;
-  offersAmount: number;
-  city: City;
-  points: CardOffers;
+  offers: Offers;
+  // city: City;
   className: string;
-
 };
 
 function MainPage(props: MainPageProps): JSX.Element {
-  const { userEmail, offers, offersAmount, city, points, className } = props;
+  const { userEmail, offers, className } = props;
 
-  // const [selectedPoint, setSelectedPoint] = useState<CardOffer | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
-  // const onListItemHover = (listItemName: string) => {
-  //   const currentPoint = points.find((point) => point.city === listItemName);
+  const onListItemHover = (offerId: number | null) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
 
-  //   setSelectedPoint(currentPoint);
-  // };
+    setSelectedPoint(currentOffer);
+  };
+
+  const offersList = useAppSelector((item) => item.offers);
+  const currentCity = useAppSelector((item) => item.city.name);
 
   return (
     <>
       <Helmet title='Find a place to stay'></Helmet>
       <MainPageHeader userEmail={userEmail} />
-
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
         <div className='tabs'>
           <section className='locations container'>
-            <ul className='locations__list tabs__list'>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item' to='#'>
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item' to='#'>
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item' to='#'>
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item tabs__item--active' to="">
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item' to='#'>
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className='locations__item'>
-                <Link className='locations__item-link tabs__item' to='#'>
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
+            <CitiesList cities={citiesNames} />
           </section>
         </div>
         <div className='cities'>
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{offersAmount} places to stay in Amsterdam</b>
+              <b className='places__found'>{offersList.length} places to stay in {currentCity}</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -93,12 +65,12 @@ function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList offers={offers} className={className} />
+                <PlaceCardList offers={offersList} className={className} onMouseOverHandler={onListItemHover} />
               </div>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'>
-                <Map city={city} points={points} />
+                <Map selectedPoint={selectedPoint} />
               </section>
             </div>
           </div>

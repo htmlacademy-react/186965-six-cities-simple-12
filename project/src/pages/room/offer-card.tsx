@@ -2,20 +2,31 @@ import MainPageHeader from '../../components/header/header';
 import ReviewsList from '../../components/review-list/review-list';
 import { Reviews } from '../../types/review';
 import Map from '../../components/map/map';
-import { CardOffers } from '../../types/offer';
+import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
+import { useState } from 'react';
 
 type MainPageHeaderProps = {
   userEmail: string;
   reviews: Reviews;
   reviewsLength: number;
   city: City;
-  offers: CardOffers;
+  offers: Offers;
   className: string;
 }
 
 function OfferCard({ userEmail, reviews, reviewsLength, city, offers, className }: MainPageHeaderProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+
+  const onListItemHover = (offerId: number | null) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+
+    setSelectedPoint(currentOffer);
+  };
+
+
   return (
     <>
       <MainPageHeader userEmail={userEmail} />
@@ -136,14 +147,14 @@ function OfferCard({ userEmail, reviews, reviewsLength, city, offers, className 
             </div>
           </div>
           <section className='property__map map'>
-            <Map city={city} points={offers} />
+            <Map selectedPoint={selectedPoint} />
           </section>
         </section>
         <div className='container'>
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              <NearbyPlaceCardList offers={offers} className={className} />
+              <NearbyPlaceCardList offers={offers} className={className} onMouseOverHandler={onListItemHover} />
             </div>
           </section>
         </div>

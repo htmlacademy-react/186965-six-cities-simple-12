@@ -1,14 +1,13 @@
-import { CardOffer } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import PlaceCard from '../offer-card/place-card';
 
 type NearbyPlaceCardProps = {
-  offer: CardOffer;
+  offer: Offer;
   id: number;
   onMouseOverHandler: (id: number) => void;
   className: string;
 }
 
-//near-places__card
 
 function NearbyPlaceCard(props: NearbyPlaceCardProps): JSX.Element {
   const { className = '', ...restProps } = props;
