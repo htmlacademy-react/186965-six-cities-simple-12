@@ -6,7 +6,7 @@ import NearbyPlaceCard from '../nearby-offers/nearby-offers';
 type NearbyPlaceCardsListProps = {
   offers: Offers;
   className: string;
-  onMouseOverHandler: (id: number) => void;
+  onMouseOverHandler: (id: number | null) => void;
 }
 
 function NearbyPlaceCardList({ offers, className, onMouseOverHandler }: NearbyPlaceCardsListProps): JSX.Element {
