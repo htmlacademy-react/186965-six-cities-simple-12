@@ -160,5 +160,57 @@ export const offers: Offers = [
       }
     }
   },
+  {
+    id: 7,
+    title: 'Beautiful & luxurious apartment',
+    previewImage: `${IMAGE_START_URL}apartment-01.jpg`,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Paris.',
+    isPremium: false,
+    houseType: 'Apartment',
+    rating: 4.2,
+    bedrooms: 5,
+    maxPeople: 1,
+    price: 20,
+    conveniences: ['Wifi', 'Heating', 'Kitchen', 'Cable TV' ],
+    hostInfo: {
+      avatarUrl: 'img/1.png',
+      id: 1,
+      isPro: true,
+      name: 'Angelina'
+    },
+    city : {
+      name: 'Paris',
+      location : {
+        lat: 48.8534100,
+        lng: 2.3488000,
+      }
+    }
+  },
+  {
+    id: 8,
+    title: 'Beautiful & luxurious apartment',
+    previewImage: `${IMAGE_START_URL}apartment-01.jpg`,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Cologne.',
+    isPremium: false,
+    houseType: 'Apartment',
+    rating: 4,
+    bedrooms: 5,
+    maxPeople: 1,
+    price: 80,
+    conveniences: ['Wifi', 'Heating', 'Kitchen', 'Cable TV' ],
+    hostInfo: {
+      avatarUrl: 'img/1.png',
+      id: 1,
+      isPro: true,
+      name: 'Angelina'
+    },
+    city : {
+      name: 'Cologne',
+      location : {
+        lat: 50.9343000,
+        lng: 6.9800000,
+      }
+    }
+  },
 
 ];

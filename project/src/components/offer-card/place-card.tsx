@@ -6,17 +6,17 @@ import { Offer } from '../../types/offer';
 type PlaceCardProps = {
   offer: Offer;
   id: number;
-  onMouseOverHandler: (id: number) => void;
+  onMouseOverHandler: (id: number | null) => void;
   className: string;
 }
 
 
 function PlaceCard(props: PlaceCardProps,): JSX.Element {
   const { offer, onMouseOverHandler, className } = props;
-  const { previewImage, isPremium, price, title, houseType, id } = offer;
+  const { previewImage, isPremium, price, title, houseType, id, rating } = offer;
 
   return (
-    <article id={id.toString()} onMouseOver={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(id)} className={`place-card ${className}`}>
+    <article id={id.toString()} onMouseOver={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(id)} onMouseLeave={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(null)} className={`place-card ${className}`}>
       {isPremium ? <div className='place-card__mark'><span>Premium</span></div> : ''}
       <div className='cities__image-wrapper place-card__image-wrapper'>
         <Link to={'/offer/$id'}>
@@ -33,7 +33,7 @@ function PlaceCard(props: PlaceCardProps,): JSX.Element {
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${rating / 5 * 100}%` }}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>

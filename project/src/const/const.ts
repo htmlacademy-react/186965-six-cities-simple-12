@@ -16,13 +16,13 @@ export enum AuthorizationStatus {
 
 
 export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+  '/img/pin.svg';
 
 export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+  '/img/pin-active.svg';
 
 
-export const defaultCity = {
+export const DEFAULT_CITY = {
   name: 'Paris',
   location: {
     lat: 48.8534100,
@@ -82,3 +82,13 @@ export const citiesNames: Cities = [
     zoom: 10
   },
 ];
+
+
+export const sortingOptions = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first'
+];
+
+export const DEFAULT_SORTING = 'Popular';
