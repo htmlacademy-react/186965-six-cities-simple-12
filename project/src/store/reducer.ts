@@ -1,29 +1,43 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortOffers } from './action';
+import { changeCity, sortOffers, loadOffers, setOffersDataLoadingStatus } from './action';
 import { DEFAULT_CITY , DEFAULT_SORTING } from '../const/const';
-import { offers } from '../mock/offers';
+import { Offer } from '../types/offer';
+import { City } from '../types/city';
 
-const initialOffers = offers.filter((offer) => offer.city.name === DEFAULT_CITY.name);
 
-const initialState = {
-  city: DEFAULT_CITY ,
-  offers: initialOffers,
-  selectedSort: DEFAULT_SORTING
+type InitialState = {
+  cityName: City;
+  offers: Offer[];
+  selectedSort: string;
+  isOffersDataLoading: boolean;
+}
+
+const initialState: InitialState = {
+  cityName: DEFAULT_CITY,
+  offers: [],
+  selectedSort: DEFAULT_SORTING,
+  isOffersDataLoading: false
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(loadOffers, (state, action) => {
+      if (action.payload) {
+        state.offers = action.payload;
+        // state.offers = state.offers.filter((item) => item.city.name === action.payload);
+
+      }
+    })
     .addCase(changeCity, (state, action) => {
       if (action.payload) {
-        state.city.name = action.payload.name;
-        state.offers = offers.filter((item) => item.city.name === action.payload.name);
-        state.city.location.lat = action.payload.location.lat;
-        state.city.location.lng = action.payload.location.lng;
+        state.cityName.city.name = action.payload.city.name;
+        state.offers = state.offers.filter((item) => item.city.name === action.payload.city.name);
+        state.cityName.city.location.latitude = action.payload.city.location.latitude;
+        state.cityName.city.location.longitude = action.payload.city.location.longitude;
       }
     })
     .addCase(sortOffers, (state, action) => {
       state.selectedSort = action.payload;
-
       state.offers = state.offers.sort((a, b) => {
         switch(state.selectedSort) {
           case 'Price: low to high':
@@ -36,6 +50,10 @@ const reducer = createReducer(initialState, (builder) => {
             return 0;
         }
       });
+    })
+
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 
 });

@@ -1,5 +1,7 @@
 import { Reviews } from '../types/review';
-import { IMAGE_START_URL } from './offers';
+
+
+const IMAGE_START_URL = '/img/';
 
 export const reviews: Reviews = [
   {

@@ -2,27 +2,28 @@ import MainPageHeader from '../../components/header/header';
 import ReviewsList from '../../components/review-list/review-list';
 import { Reviews } from '../../types/review';
 import Map from '../../components/map/map';
-import { Offers } from '../../types/offer';
+// import { Offers } from '../../types/offer';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type MainPageHeaderProps = {
   userEmail: string;
   reviews: Reviews;
   reviewsLength: number;
   city: City;
-  offers: Offers;
   className: string;
 }
 
-function OfferCard({ userEmail, reviews, reviewsLength, city, offers, className }: MainPageHeaderProps): JSX.Element {
+function OfferCard({ userEmail, reviews, reviewsLength, city, className }: MainPageHeaderProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+
+  const offers = useAppSelector((state) => state.offers);
 
   const onListItemHover = (offerId: number | null) => {
     const currentOffer = offers.find((offer) => offer.id === offerId);
-
     setSelectedPoint(currentOffer);
   };
 
