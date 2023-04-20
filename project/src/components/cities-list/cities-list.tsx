@@ -8,7 +8,7 @@ type CitiesListProps = {
 function CitiesList({ cities }: CitiesListProps): JSX.Element {
   return (
     <ul className='locations__list tabs__list'>
-      {cities.map((city) => <CityItem key={city.name} city={city} />)}
+      {cities.map((city) => <CityItem key={city.city.name} city={city} />)}
     </ul>
   );
 }

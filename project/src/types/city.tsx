@@ -1,10 +1,12 @@
 export type City = {
-  name: string;
-  location: {
-    lat: number;
-    lng: number;
+  city: {
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+    name: string;
   };
-  zoom: number;
 };
 
 export type Cities = City[];

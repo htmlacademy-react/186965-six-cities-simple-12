@@ -13,7 +13,7 @@ type PlaceCardProps = {
 
 function PlaceCard(props: PlaceCardProps,): JSX.Element {
   const { offer, onMouseOverHandler, className } = props;
-  const { previewImage, isPremium, price, title, houseType, id, rating } = offer;
+  const { previewImage, isPremium, price, title, id, rating, type } = offer;
 
   return (
     <article id={id.toString()} onMouseOver={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(id)} onMouseLeave={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(null)} className={`place-card ${className}`}>
@@ -40,7 +40,7 @@ function PlaceCard(props: PlaceCardProps,): JSX.Element {
         <h2 className='place-card__name'>
           <Link to={'/offer/$id'}>{title}</Link>
         </h2>
-        <p className='place-card__type'>{houseType}</p>
+        <p className='place-card__type'>{type}</p>
       </div>
     </article >
   );
