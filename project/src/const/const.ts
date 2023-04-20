@@ -7,13 +7,11 @@ export enum AppRoute {
 
 }
 
-
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
-
 
 export const URL_MARKER_DEFAULT =
   '/img/pin.svg';
@@ -32,7 +30,6 @@ export const DEFAULT_CITY = {
     name: 'Paris',
   }
 };
-
 
 export const citiesNames: Cities = [
   {
@@ -97,7 +94,6 @@ export const citiesNames: Cities = [
   },
 ];
 
-
 export const sortingOptions = [
   'Popular',
   'Price: low to high',
@@ -107,5 +103,11 @@ export const sortingOptions = [
 
 export const DEFAULT_SORTING = 'Popular';
 
-
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+

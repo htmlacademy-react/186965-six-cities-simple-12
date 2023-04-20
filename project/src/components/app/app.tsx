@@ -15,7 +15,6 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 
 type AppProps = {
-  userEmail: string;
   city: City;
   reviews: Reviews;
   reviewsLength: number;
@@ -23,11 +22,12 @@ type AppProps = {
 }
 
 function App(props: AppProps): JSX.Element {
-  const { userEmail, city, reviews, reviewsLength, className } = props;
+  const { city, reviews, reviewsLength, className } = props;
 
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isOffersDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -37,11 +37,11 @@ function App(props: AppProps): JSX.Element {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage userEmail={userEmail} className={className} />} />
+          <Route path={AppRoute.Main} element={<MainPage className={className} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Offer} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <OfferCard userEmail={userEmail} reviews={reviews} reviewsLength={reviewsLength} city={city} className={className} />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <OfferCard reviews={reviews} reviewsLength={reviewsLength} city={city} className={className} />
             </PrivateRoute>
           }
           />

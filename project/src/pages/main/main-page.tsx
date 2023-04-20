@@ -15,12 +15,11 @@ import SortingForm from '../../components/sort-form/sort-form';
 
 
 type MainPageProps = {
-  userEmail: string;
   className: string;
 };
 
 function MainPage(props: MainPageProps): JSX.Element {
-  const { userEmail, className } = props;
+  const { className } = props;
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
@@ -32,14 +31,12 @@ function MainPage(props: MainPageProps): JSX.Element {
     setSelectedPoint(currentOffer);
   };
 
-
-  const offersList = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.cityName.city.name));
   const currentCity = useAppSelector((item) => item.cityName);
 
   return (
     <>
       <Helmet title='Find a place to stay'></Helmet>
-      <MainPageHeader userEmail={userEmail} />
+      <MainPageHeader />
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
         <div className='tabs'>
@@ -51,10 +48,10 @@ function MainPage(props: MainPageProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{offersList.length} places to stay in {currentCity.city.name}</b>
+              <b className='places__found'>{offers.length} places to stay in {currentCity.city.name}</b>
               <SortingForm />
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList offers={offersList} className={className} onMouseOverHandler={onListItemHover} />
+                <PlaceCardList offers={offers} className={className} onMouseOverHandler={onListItemHover} />
               </div>
             </section>
             <div className='cities__right-section'>

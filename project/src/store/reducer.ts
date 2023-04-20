@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortOffers, loadOffers, setOffersDataLoadingStatus } from './action';
-import { DEFAULT_CITY , DEFAULT_SORTING } from '../const/const';
+import { changeCity, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization } from './action';
+import { DEFAULT_CITY, DEFAULT_SORTING, AuthorizationStatus } from '../const/const';
 import { Offer } from '../types/offer';
 import { City } from '../types/city';
 
@@ -10,13 +10,17 @@ type InitialState = {
   offers: Offer[];
   selectedSort: string;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+
 }
 
 const initialState: InitialState = {
   cityName: DEFAULT_CITY,
   offers: [],
   selectedSort: DEFAULT_SORTING,
-  isOffersDataLoading: false
+  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -24,14 +28,11 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       if (action.payload) {
         state.offers = action.payload;
-        // state.offers = state.offers.filter((item) => item.city.name === action.payload);
-
       }
     })
     .addCase(changeCity, (state, action) => {
       if (action.payload) {
         state.cityName.city.name = action.payload.city.name;
-        state.offers = state.offers.filter((item) => item.city.name === action.payload.city.name);
         state.cityName.city.location.latitude = action.payload.city.location.latitude;
         state.cityName.city.location.longitude = action.payload.city.location.longitude;
       }
@@ -51,10 +52,13 @@ const reducer = createReducer(initialState, (builder) => {
         }
       });
     })
-
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
+
 
 });
 

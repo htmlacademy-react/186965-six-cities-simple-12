@@ -11,8 +11,6 @@ import { fetchOffersAction } from './store/api-actions';
 store.dispatch(fetchOffersAction());
 
 const AppSettings = {
-  UserEmail: 'Oliver.conner@gmail.com',
-  // Offers: offers,
   ReviewsLength: reviews.length,
 } as const;
 
@@ -22,11 +20,10 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Provider store={store}>
-
-    <React.StrictMode>
-      <App userEmail={AppSettings.UserEmail} city={CITY} reviews={reviews} reviewsLength={AppSettings.ReviewsLength} className='' />
-    </React.StrictMode>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App city={CITY} reviews={reviews} reviewsLength={AppSettings.ReviewsLength} className='' />
+    </Provider>
+  </React.StrictMode>
 
 );

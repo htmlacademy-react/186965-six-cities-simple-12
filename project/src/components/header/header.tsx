@@ -1,10 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { AuthorizationStatus } from '../../const/const';
+import { logoutAction } from '../../store/api-actions';
+import { AppRoute } from '../../const/const';
 
-type MainPageHeaderProps = {
-  userEmail: string;
-}
 
-function MainPageHeader({ userEmail }: MainPageHeaderProps): JSX.Element {
+function MainPageHeader(): JSX.Element {
+  // const { avatarUrl, email } = useAppSelector(getUserData);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   return (
 
     <header className="header">
@@ -16,19 +23,45 @@ function MainPageHeader({ userEmail }: MainPageHeaderProps): JSX.Element {
             </Link>
           </div>
           <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <div className="header__nav-profile">
-                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__user-name user__name">{userEmail}</span>
-                </div>
-              </li>
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to="/">
-                  <span className="header__signout">Sign out</span>
-                </Link>
-              </li>
-            </ul>
+            {authorizationStatus === AuthorizationStatus.Auth ? (
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <div className="header__nav-profile">
+                    <div className="header__avatar-wrapper user__avatar-wrapper" style={{ backgroundImage: 'url(#)' }}></div>
+                    <span className="header__user-name user__name"></span>
+                  </div>
+                </li>
+                <li className="header__nav-item">
+                  <Link
+                    className="header__nav-link"
+                    to="/"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      dispatch(logoutAction());
+                      navigate(AppRoute.Login);
+                    }}
+                  >
+                    <span className="header__signout">Sign out</span>
+                  </Link>
+                </li>
+              </ul>
+            ) : (
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link
+                    className="header__nav-link header__nav-link--profile"
+                    to="/#"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      navigate(AppRoute.Login);
+                    }}
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__login">Sign in</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </nav>
         </div>
       </div>
