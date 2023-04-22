@@ -8,16 +8,21 @@ import { City } from '../../types/city';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
+// import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { store } from '../../store';
+import { checkAuthAction } from '../../store/api-actions';
+
+store.dispatch(checkAuthAction());
 
 type MainPageHeaderProps = {
-  userEmail: string;
   reviews: Reviews;
   reviewsLength: number;
   city: City;
   className: string;
 }
 
-function OfferCard({ userEmail, reviews, reviewsLength, city, className }: MainPageHeaderProps): JSX.Element {
+function OfferCard({ reviews, reviewsLength, city, className }: MainPageHeaderProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
   const offers = useAppSelector((state) => state.offers);
@@ -30,7 +35,8 @@ function OfferCard({ userEmail, reviews, reviewsLength, city, className }: MainP
 
   return (
     <>
-      <MainPageHeader userEmail={userEmail} />
+      <MainPageHeader />
+      {/* <ToastContainer /> */}
       <main className='page__main page__main--property'>
         <section className='property'>
           <div className='property__gallery-container container'>

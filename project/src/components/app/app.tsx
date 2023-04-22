@@ -1,4 +1,4 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { AppRoute, AuthorizationStatus } from '../../const/const';
@@ -12,10 +12,11 @@ import { City } from '../../types/city';
 import { Reviews } from '../../types/review';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 
 type AppProps = {
-  userEmail: string;
   city: City;
   reviews: Reviews;
   reviewsLength: number;
@@ -23,11 +24,12 @@ type AppProps = {
 }
 
 function App(props: AppProps): JSX.Element {
-  const { userEmail, city, reviews, reviewsLength, className } = props;
+  const { city, reviews, reviewsLength, className } = props;
 
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isOffersDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -35,13 +37,13 @@ function App(props: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage userEmail={userEmail} className={className} />} />
+          <Route path={AppRoute.Main} element={<MainPage className={className} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Offer} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <OfferCard userEmail={userEmail} reviews={reviews} reviewsLength={reviewsLength} city={city} className={className} />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <OfferCard reviews={reviews} reviewsLength={reviewsLength} city={city} className={className} />
             </PrivateRoute>
           }
           />
@@ -51,7 +53,7 @@ function App(props: AppProps): JSX.Element {
             element={<NoPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
 
   );

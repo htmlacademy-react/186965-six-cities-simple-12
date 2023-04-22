@@ -2,16 +2,12 @@ import MainPageHeader from '../../components/header/header';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-type MainPageHeaderProps = {
-  userEmail: string;
-};
 
-
-function MainPageEmpty({ userEmail }: MainPageHeaderProps): JSX.Element {
+function MainPageEmpty(): JSX.Element {
   return (
     <>
       <Helmet title='No places found'></Helmet>
-      <MainPageHeader userEmail={userEmail} />
+      <MainPageHeader />
 
       <main className='page__main page__main--index page__main--index-empty'>
         <h1 className='visually-hidden'>Cities</h1>

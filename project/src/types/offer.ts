@@ -31,7 +31,7 @@ export interface Offer {
   rating: number;
   title: string;
   type: string;
-};
+}
 
 
 export type Offers = Offer[];
