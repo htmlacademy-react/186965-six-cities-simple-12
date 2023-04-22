@@ -8,7 +8,7 @@ import { City } from '../../types/city';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from '../../store';
 import { checkAuthAction } from '../../store/api-actions';
@@ -36,7 +36,7 @@ function OfferCard({ reviews, reviewsLength, city, className }: MainPageHeaderPr
   return (
     <>
       <MainPageHeader />
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <main className='page__main page__main--property'>
         <section className='property'>
           <div className='property__gallery-container container'>

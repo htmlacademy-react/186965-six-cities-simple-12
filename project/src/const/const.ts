@@ -3,8 +3,8 @@ import { Cities } from '../types/city';
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Offer = '/offer',
-
+  Offer = '/offer/:id',
+  Comments = '/comments/'
 }
 
 export enum AuthorizationStatus {
@@ -110,4 +110,3 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
-

@@ -1,20 +1,20 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute } from '../../const/const';
-import { AuthorizationStatus } from '../../const/const';
+// import { AppRoute } from '../../const/const';
+
 
 function LoginPage(): JSX.Element {
-  const emailRef = useRef<HTMLInputElement | null>(null);
+  const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const selectedCity = useAppSelector((state) => state.cityName);
+  const selectedCity = useAppSelector((state) => state.cityName.city.name);
 
   const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -23,19 +23,13 @@ function LoginPage(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
-        login: emailRef.current.value,
+        login: loginRef.current.value,
         password: passwordRef.current.value,
       });
     }
   };
-
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    return <Navigate to={AppRoute.Main} />;
-  }
-
 
   return (
     <>
@@ -58,7 +52,7 @@ function LoginPage(): JSX.Element {
             <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref={emailRef} />
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref={loginRef} />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -70,7 +64,7 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="#">
-                <span>{selectedCity.city.name}</span>
+                <span>{selectedCity}</span>
               </Link>
             </div>
           </section>

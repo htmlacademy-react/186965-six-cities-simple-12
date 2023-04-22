@@ -3,6 +3,7 @@ import { City } from '../types/city';
 import { SortingOption } from '../types/sort';
 import { Offers } from '../types/offer';
 import { AuthorizationStatus, AppRoute } from '../const/const';
+import { UserData } from '../types/user-data';
 
 export const changeCity = createAction<City>('city/changeCity');
 
@@ -14,5 +15,6 @@ export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersD
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
+export const redirectToRoute = createAction<AppRoute>('route/redirectToRoute');
 
-export const redirectToRoute = createAction<AppRoute>('game/redirectToRoute');
+export const setUser = createAction<UserData>('user/setUser');
