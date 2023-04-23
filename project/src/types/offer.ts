@@ -35,3 +35,4 @@ export interface Offer {
 
 
 export type Offers = Offer[];
+

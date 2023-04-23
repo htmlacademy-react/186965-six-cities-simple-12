@@ -1,11 +1,19 @@
 export interface Review {
-  id: number;
-  userImage: string;
-  userName: string;
-  rating: number;
-  text: string;
+  comment: string;
   date: string;
+  id: number;
+  rating: number;
+  user: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
 }
 
+export interface NewReview {
+  comment: string;
+  rating: number;
+}
 
 export type Reviews = Review[];

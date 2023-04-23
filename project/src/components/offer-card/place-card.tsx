@@ -1,7 +1,6 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-// import { AppRoute } from '../../const/conts';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -19,7 +18,7 @@ function PlaceCard(props: PlaceCardProps,): JSX.Element {
     <article id={id.toString()} onMouseOver={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(id)} onMouseLeave={(evt: MouseEvent<HTMLElement>) => onMouseOverHandler(null)} className={`place-card ${className}`}>
       {isPremium ? <div className='place-card__mark'><span>Premium</span></div> : ''}
       <div className='cities__image-wrapper place-card__image-wrapper'>
-        <Link to={'/offer/$id'}>
+        <Link to={`offer/${id}`}>
           <img className='place-card__image' src={previewImage} width='260' height='200' alt={title} />
         </Link>
       </div>

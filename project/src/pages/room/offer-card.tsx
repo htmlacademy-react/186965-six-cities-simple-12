@@ -1,36 +1,58 @@
 import MainPageHeader from '../../components/header/header';
 import ReviewsList from '../../components/review-list/review-list';
-import { Reviews } from '../../types/review';
 import Map from '../../components/map/map';
-// import { Offers } from '../../types/offer';
-import { Offer } from '../../types/offer';
-import { City } from '../../types/city';
+import { Offer, Offers } from '../../types/offer';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks/use-app-selector';
+import { useState, useEffect } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 // import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from '../../store';
-import { checkAuthAction } from '../../store/api-actions';
+import { checkAuthAction, fetchOfferAction } from '../../store/api-actions';
+import { MAX_IMAGES_AMOUNT } from '../../const/const';
+import { useParams } from 'react-router-dom';
+import NoPage from '../404-page/404-page';
+import { inflectWord } from '../../utils/utils';
+import { useAppSelector } from '../../hooks/use-app-selector';
+
 
 store.dispatch(checkAuthAction());
 
 type MainPageHeaderProps = {
-  reviews: Reviews;
-  reviewsLength: number;
-  city: City;
+  offers: Offers;
   className: string;
 }
 
-function OfferCard({ reviews, reviewsLength, city, className }: MainPageHeaderProps): JSX.Element {
+function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
+  const { id } = useParams();
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+  const offerItem = offers.find((item) => item.id === Number(id));
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
 
-  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
 
-  const onListItemHover = (offerId: number | null) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
-    setSelectedPoint(currentOffer);
+  const onListItemHover = (offerItemId: number | null) => {
+    const selectedOffer = offers.find((offer) => offer.id === offerItemId);
+    setSelectedPoint(selectedOffer);
+
   };
+
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferAction(Number(id)));
+    }
+  }, [dispatch, id]);
+
+
+  if (!offerItem || !nearbyOffers || !reviews) {
+    return <NoPage />;
+  }
+
+  const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
+
+  const maxImagedAmount = images.slice(0, MAX_IMAGES_AMOUNT);
 
 
   return (
@@ -41,127 +63,83 @@ function OfferCard({ reviews, reviewsLength, city, className }: MainPageHeaderPr
         <section className='property'>
           <div className='property__gallery-container container'>
             <div className='property__gallery'>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/room.jpg' alt='Photo studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='Photo studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-02.jpg' alt='Photo studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-03.jpg' alt='Photo studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/studio-01.jpg' alt='Photo studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='Photo studio' />
-              </div>
+              {maxImagedAmount.map((image) => (
+                <div className='property__image-wrapper' key={image}>
+                  <img className='property__image' src={image} alt='Photo studio' />
+                </div>
+              ))}
             </div>
           </div>
           <div className='property__container container'>
             <div className='property__wrapper'>
-              <div className='property__mark'>
-                <span>Premium</span>
-              </div>
+              {isPremium &&
+                <div className='property__mark'>
+                  <span>Premium</span>
+                </div>}
               <div className='property__name-wrapper'>
                 <h1 className='property__name'>
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
               </div>
               <div className='property__rating rating'>
                 <div className='property__stars rating__stars'>
-                  <span style={{ width: '80%' }}></span>
-                  <span className='visually-hidden'>Rating</span>
+                  <span style={{ width: `${rating ? Math.round(rating / 5 * 100) : 0}%` }}></span>
+                  <span className='visually-hidden'>{rating}</span>
                 </div>
-                <span className='property__rating-value rating__value'>4.8</span>
+                <span className='property__rating-value rating__value'>{rating}</span>
               </div>
               <ul className='property__features'>
                 <li className='property__feature property__feature--entire'>
-                  Apartment
+                  {type}
                 </li>
                 <li className='property__feature property__feature--bedrooms'>
-                  3 Bedrooms
+                  {bedrooms} {inflectWord(bedrooms, ['Bedroom', 'Bedrooms'])}
                 </li>
                 <li className='property__feature property__feature--adults'>
-                  Max 4 adults
+                  Max {maxAdults} {inflectWord(maxAdults, ['adult', 'adults', 'adults', 'adults'])}
                 </li>
               </ul>
               <div className='property__price'>
-                <b className='property__price-value'>&euro;120</b>
+                <b className='property__price-value'>&euro;{price}</b>
                 <span className='property__price-text'>&nbsp;night</span>
               </div>
               <div className='property__inside'>
                 <h2 className='property__inside-title'>What&apos;s inside</h2>
                 <ul className='property__inside-list'>
-                  <li className='property__inside-item'>
-                    Wi-Fi
-                  </li>
-                  <li className='property__inside-item'>
-                    Washing machine
-                  </li>
-                  <li className='property__inside-item'>
-                    Towels
-                  </li>
-                  <li className='property__inside-item'>
-                    Heating
-                  </li>
-                  <li className='property__inside-item'>
-                    Coffee machine
-                  </li>
-                  <li className='property__inside-item'>
-                    Baby seat
-                  </li>
-                  <li className='property__inside-item'>
-                    Kitchen
-                  </li>
-                  <li className='property__inside-item'>
-                    Dishwasher
-                  </li>
-                  <li className='property__inside-item'>
-                    Cabel TV
-                  </li>
-                  <li className='property__inside-item'>
-                    Fridge
-                  </li>
+                  {goods.map((goodItem) => (
+                    <li className='property__inside-item' key={goodItem}>
+                      {goodItem}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className='property__host'>
                 <h2 className='property__host-title'>Meet the host</h2>
                 <div className='property__host-user user'>
                   <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
-                    <img className='property__avatar user__avatar' src='img/avatar-angelina.jpg' width='74' height='74' alt='Host avatar' />
+                    <img className='property__avatar user__avatar' src={host.avatarUrl} width='74' height='74' alt='Host avatar' />
                   </div>
                   <span className='property__user-name'>
-                    Angelina
+                    {host.name}
                   </span>
-                  <span className='property__user-status'>
-                    Pro
-                  </span>
+                  {host.isPro && <span className='property__user-status'>Pro</span>}
                 </div>
                 <div className='property__description'>
-                  <p className='property__text'>
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className='property__text'>
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
+                  <p className='property__text'>{description}</p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews} reviewsLength={reviewsLength} />
+              <ReviewsList reviews={reviews} offerId={Number(id)} />
             </div>
           </div>
           <section className='property__map map'>
-            <Map selectedPoint={selectedPoint} />
+            <Map selectedPoint={selectedPoint} offers={nearbyOffers} />
           </section>
         </section>
         <div className='container'>
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              <NearbyPlaceCardList offers={offers} className={className} onMouseOverHandler={onListItemHover} />
+              <NearbyPlaceCardList offers={nearbyOffers} className={className} onMouseOverHandler={onListItemHover} />
             </div>
           </section>
         </div>

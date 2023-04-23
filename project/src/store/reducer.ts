@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser } from './action';
+import { changeCity, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadReviews, loadNearbyOffers } from './action';
 import { DEFAULT_CITY, DEFAULT_SORTING, AuthorizationStatus } from '../const/const';
-import { Offer } from '../types/offer';
+import { Offer, Offers } from '../types/offer';
 import { City } from '../types/city';
 import { UserData } from '../types/user-data';
+import { Reviews } from '../types/review';
 
 
 type InitialState = {
@@ -14,6 +15,9 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   user: UserData | null;
+  reviews: Reviews;
+  nearbyOffers: Offers;
+
 }
 
 const initialState: InitialState = {
@@ -24,6 +28,8 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   user: null,
+  reviews: [],
+  nearbyOffers: []
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -63,6 +69,17 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = [...action.payload].sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        }
+        return -1;
+      }).slice(0, 10);
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
     });
 
 });
