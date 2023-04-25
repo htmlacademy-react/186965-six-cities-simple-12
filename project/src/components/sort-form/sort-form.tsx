@@ -5,6 +5,7 @@ import { sortingOptions } from '../../const/const';
 import { SortingOption } from '../../types/sort';
 import { getSelectedSorting } from '../../store/offers-activity-process/selectors';
 import { sortOffers } from '../../store/offers-activity-process/offers-activity-process';
+import { memo } from 'react';
 
 function SortingForm(): JSX.Element {
   const [isSortListOpened, setIsSortListOpened] = useState(false);
@@ -38,4 +39,4 @@ function SortingForm(): JSX.Element {
   );
 }
 
-export default SortingForm;
+export default memo(SortingForm);

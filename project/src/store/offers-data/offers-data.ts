@@ -31,6 +31,7 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
+
       })
       .addCase(fetchOfferAction.pending, (state) => {
         state.error = null;

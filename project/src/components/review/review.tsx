@@ -1,6 +1,7 @@
 
 import { Review } from '../../types/review';
 import dayjs from 'dayjs';
+import { memo } from 'react';
 
 type ReviewProps = {
   review: Review;
@@ -34,4 +35,4 @@ function ReviewItem({ review }: ReviewProps): JSX.Element {
 }
 
 
-export default ReviewItem;
+export default memo(ReviewItem);

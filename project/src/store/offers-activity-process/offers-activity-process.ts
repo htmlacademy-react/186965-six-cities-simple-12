@@ -15,11 +15,9 @@ export const offersActivityProcess = createSlice({
   initialState,
   reducers: {
     changeCity: (state, action: PayloadAction<City>) => {
-      state.city.city.name = action.payload.city.name;
-      state.offers = state.offers.filter((item) => item.city.name === action.payload.city.name);
+      state.city = action.payload;
       state.city.city.location.latitude = action.payload.city.location.latitude;
       state.city.city.location.longitude = action.payload.city.location.longitude;
-      state.selectedSort = DEFAULT_SORTING;
     },
     sortOffers: (state, action: PayloadAction<SortingOption>) => {
       state.selectedSort = action.payload;

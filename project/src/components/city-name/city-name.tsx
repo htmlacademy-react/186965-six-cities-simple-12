@@ -14,15 +14,14 @@ function CityItem({ cityTarget }: CityItemProps): JSX.Element {
   const currentCity = useAppSelector(getSelectedCity);
   const dispatch = useAppDispatch();
 
-  const onChangeCity = (city: City) => {
-    dispatch(changeCity(city));
+  const onChangeCity = (cit: City) => {
+    dispatch(changeCity(cit));
   };
 
   return (
     <li className='locations__item'>
-      <Link className={`locations__item-link tabs__item ${cityTarget === currentCity ? 'tabs__item--active' : ''}`} to='/#'
-        onClick={(evt) => {
-          evt.preventDefault();
+      <Link className={`locations__item-link tabs__item ${cityTarget.city.name === currentCity.city.name ? 'tabs__item--active' : ''}`} to='/#'
+        onClick={() => {
           onChangeCity(cityTarget);
         }}
       >
