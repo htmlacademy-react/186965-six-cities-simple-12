@@ -3,18 +3,17 @@ import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/user-process/api-actions';
 import { AuthData } from '../../types/auth-data';
-// import { AppRoute } from '../../const/const';
+import { getChangeCity } from '../../store/offers-data/selectors';
 
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const selectedCity = useAppSelector((state) => state.cityName.city.name);
+  const selectedCity = useAppSelector(getChangeCity);
 
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -64,7 +63,7 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="#">
-                <span>{selectedCity}</span>
+                <span>{selectedCity.city.name}</span>
               </Link>
             </div>
           </section>

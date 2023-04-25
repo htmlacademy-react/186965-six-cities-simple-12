@@ -14,7 +14,6 @@ function NearbyPlaceCard(props: NearbyPlaceCardProps): JSX.Element {
 
   return (
     <PlaceCard {...restProps} className={`near-places__card ${className}`} />
-
   );
 }
 

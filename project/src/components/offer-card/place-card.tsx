@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { memo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -45,4 +46,4 @@ function PlaceCard(props: PlaceCardProps,): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default memo(PlaceCard);

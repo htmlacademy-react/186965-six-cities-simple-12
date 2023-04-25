@@ -1,5 +1,6 @@
 import CityItem from '../city-name/city-name';
 import { Cities } from '../../types/city';
+import { memo } from 'react';
 
 type CitiesListProps = {
   cities: Cities;
@@ -8,9 +9,9 @@ type CitiesListProps = {
 function CitiesList({ cities }: CitiesListProps): JSX.Element {
   return (
     <ul className='locations__list tabs__list'>
-      {cities.map((city) => <CityItem key={city.city.name} city={city} />)}
+      {cities.map((city) => <CityItem key={city.city.name} cityTarget={city} />)}
     </ul>
   );
 }
 
-export default CitiesList;
+export default memo(CitiesList);

@@ -5,6 +5,8 @@ import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
 import { Offer, Offers } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { getChangeCity } from '../../store/offers-data/selectors';
+import { memo } from 'react';
 
 
 type MapProps = {
@@ -26,9 +28,7 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
   const { selectedPoint, offers } = props;
-  // const offers = useAppSelector((state) => state.offers);
-
-  const location = useAppSelector((state) => state.cityName);
+  const location = useAppSelector(getChangeCity);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
@@ -54,4 +54,4 @@ function Map(props: MapProps): JSX.Element {
   return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;
 }
 
-export default Map;
+export default memo(Map);

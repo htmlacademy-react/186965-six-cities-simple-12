@@ -2,13 +2,15 @@ import { useState, MouseEvent } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { useDispatch } from 'react-redux';
 import { sortingOptions } from '../../const/const';
-import { sortOffers } from '../../store/action';
 import { SortingOption } from '../../types/sort';
+import { getSelectedSorting } from '../../store/offers-data/selectors';
+import { sortOffers } from '../../store/offers-data/offers-data';
+import { memo } from 'react';
 
 function SortingForm(): JSX.Element {
   const [isSortListOpened, setIsSortListOpened] = useState(false);
 
-  const selectedSort = useAppSelector((state) => state.selectedSort);
+  const selectedSort = useAppSelector(getSelectedSorting);
   const dispatch = useDispatch();
 
 
@@ -37,4 +39,4 @@ function SortingForm(): JSX.Element {
   );
 }
 
-export default SortingForm;
+export default memo(SortingForm);

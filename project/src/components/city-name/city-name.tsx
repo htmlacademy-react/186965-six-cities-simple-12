@@ -1,22 +1,31 @@
 
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { changeCity } from '../../store/action';
+import { getSelectedCity } from '../../store/offers-data/selectors';
+import { changeCity } from '../../store/offers-data/offers-data';
 import { City } from '../../types/city';
 import { Link } from 'react-router-dom';
 
 type CityItemProps = {
-  city: City;
+  cityTarget: City;
 }
 
-function CityItem({ city }: CityItemProps): JSX.Element {
+function CityItem({ cityTarget }: CityItemProps): JSX.Element {
+  const currentCity = useAppSelector(getSelectedCity);
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((item) => item.cityName.city.name);
+
+  const onChangeCity = (cit: City) => {
+    dispatch(changeCity(cit));
+  };
 
   return (
     <li className='locations__item'>
-      <Link className={`locations__item-link tabs__item ${city.city.name === currentCity ? 'tabs__item--active' : ''}`} to='/#' onClick={() => dispatch(changeCity(city))}>
-        <span>{city.city.name}</span>
+      <Link className={`locations__item-link tabs__item ${cityTarget.city.name === currentCity.city.name ? 'tabs__item--active' : ''}`} to='/#'
+        onClick={() => {
+          onChangeCity(cityTarget);
+        }}
+      >
+        <span>{cityTarget.city.name}</span>
       </Link>
     </li >
 
