@@ -5,6 +5,7 @@ import { APIRoute } from '../../const/const';
 import { Offer, Offers } from '../../types/offer';
 import { Reviews, NewReview } from '../../types/review';
 
+
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;

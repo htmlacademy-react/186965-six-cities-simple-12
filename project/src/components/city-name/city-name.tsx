@@ -1,8 +1,8 @@
 
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { getSelectedCity } from '../../store/offers-activity-process/selectors';
-import { changeCity } from '../../store/offers-activity-process/offers-activity-process';
+import { getSelectedCity } from '../../store/offers-data/selectors';
+import { changeCity } from '../../store/offers-data/offers-data';
 import { City } from '../../types/city';
 import { Link } from 'react-router-dom';
 

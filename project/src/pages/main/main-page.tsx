@@ -3,8 +3,8 @@ import MainPageHeader from '../../components/header/header';
 import MainContent from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { getOffers } from '../../store/offers-data/selectors';
-
+import { getOffers, getDataLoadingStatus } from '../../store/offers-data/selectors';
+import { ThreeDots } from 'react-loader-spinner';
 
 type MainPageProps = {
   className: string;
@@ -13,6 +13,11 @@ type MainPageProps = {
 function MainPage(props: MainPageProps): JSX.Element {
   const { className } = props;
   const offers = useAppSelector(getOffers);
+  const isOfferDataLoading = useAppSelector(getDataLoadingStatus);
+
+  if (isOfferDataLoading) {
+    return (<ThreeDots height='80' width='80' radius='9' color='#4fa94d' ariaLabel='three-dots-loading' wrapperStyle={{}} visible />);
+  }
 
   return (
     <>

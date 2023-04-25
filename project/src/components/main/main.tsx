@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { getChangeCity, getDataLoadingStatus, getOffers } from '../../store/offers-data/selectors';
+import { getChangeCity, getOffers } from '../../store/offers-data/selectors';
 import PlaceCardList from '../../components/offer-list/place-cards-list';
 import Map from '../../components/map/map';
 import { Offer } from '../../types/offer';
@@ -8,8 +8,6 @@ import { Offer } from '../../types/offer';
 import CitiesList from '../../components/cities-list/cities-list';
 import { citiesNames } from '../../const/const';
 import SortingForm from '../../components/sort-form/sort-form';
-
-import { ThreeDots } from 'react-loader-spinner';
 
 type MainContentProps = {
   className: string;
@@ -20,9 +18,8 @@ function MainContent({ className }: MainContentProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
   const allOffers = useAppSelector(getOffers);
-  const currentCity = useAppSelector(getChangeCity);
 
-  const isOfferDataLoading = useAppSelector(getDataLoadingStatus);
+  const currentCity = useAppSelector(getChangeCity);
 
   const offers = allOffers.filter((item) => item.city.name === currentCity.city.name);
 
@@ -31,10 +28,6 @@ function MainContent({ className }: MainContentProps): JSX.Element {
     setSelectedPoint(currentOffer);
   }, [offers]);
 
-
-  if (isOfferDataLoading) {
-    return (<ThreeDots height='80' width='80' radius='9' color='#4fa94d' ariaLabel='three-dots-loading' wrapperStyle={{}} visible />);
-  }
 
   return (
     <main className='page__main page__main--index'>

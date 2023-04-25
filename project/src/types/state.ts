@@ -20,6 +20,8 @@ export type OffersData = {
   user: UserData | null;
   reviews: Reviews;
   nearbyOffers: Offers;
+  isSendingReviewStatus: boolean;
+  isSendingReviewError: boolean;
 }
 
 export type OffersProcess = {

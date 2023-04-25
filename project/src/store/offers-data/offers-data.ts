@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchOffersAction, fetchOfferAction, sendNewReviewAction } from './api-actions';
 import { OffersData } from '../../types/state';
 import { NameSpace, DEFAULT_CITY, DEFAULT_SORTING } from '../../const/const';
-
+import { SortingOption } from '../../types/sort';
+import { City } from '../../types/city';
 
 const initialState: OffersData = {
   cityName: DEFAULT_CITY,
@@ -12,14 +13,38 @@ const initialState: OffersData = {
   error: null,
   user: null,
   reviews: [],
-  nearbyOffers: []
+  nearbyOffers: [],
+  isSendingReviewStatus: false,
+  isSendingReviewError: false
 };
 
 
 export const offersData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    changeCity: (state, action: PayloadAction<City>) => {
+      state.cityName.city.name = action.payload.city.name;
+      state.cityName.city.location.latitude = action.payload.city.location.latitude;
+      state.cityName.city.location.longitude = action.payload.city.location.longitude;
+      state.selectedSort = DEFAULT_SORTING;
+    },
+    sortOffers: (state, action: PayloadAction<SortingOption>) => {
+      state.selectedSort = action.payload;
+      state.offers = state.offers.sort((a, b) => {
+        switch(state.selectedSort) {
+          case 'Price: low to high':
+            return a.price - b.price;
+          case 'Price: high to low':
+            return b.price - a.price;
+          case 'Top rated first':
+            return b.rating - a.rating;
+          default:
+            return 0;
+        }
+      });
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -53,7 +78,7 @@ export const offersData = createSlice({
         state.isOffersDataLoading = false;
       })
       .addCase(sendNewReviewAction.pending, (state) => {
-        state.error = null;
+        state.isSendingReviewStatus = true;
       })
       .addCase(sendNewReviewAction.fulfilled, (state, action) => {
         state.reviews = [...action.payload].sort((a, b) => {
@@ -62,9 +87,14 @@ export const offersData = createSlice({
           }
           return -1;
         }).slice(0, 10);
+        state.isSendingReviewStatus = false;
       })
       .addCase(sendNewReviewAction.rejected, (state) => {
-        state.error = 'Error';
+        state.isSendingReviewStatus = true;
+        state.isSendingReviewError = true;
       });
   }
 });
+
+
+export const { changeCity, sortOffers } = offersData.actions;

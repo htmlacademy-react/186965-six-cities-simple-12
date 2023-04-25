@@ -3,8 +3,8 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { useDispatch } from 'react-redux';
 import { sortingOptions } from '../../const/const';
 import { SortingOption } from '../../types/sort';
-import { getSelectedSorting } from '../../store/offers-activity-process/selectors';
-import { sortOffers } from '../../store/offers-activity-process/offers-activity-process';
+import { getSelectedSorting } from '../../store/offers-data/selectors';
+import { sortOffers } from '../../store/offers-data/offers-data';
 import { memo } from 'react';
 
 function SortingForm(): JSX.Element {

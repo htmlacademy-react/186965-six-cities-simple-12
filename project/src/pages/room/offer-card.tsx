@@ -9,12 +9,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { store } from '../../store';
 import { MAX_IMAGES_AMOUNT } from '../../const/const';
 import { useParams } from 'react-router-dom';
-import NoPage from '../404-page/404-page';
 import { inflectWord } from '../../utils/utils';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { checkAuthAction } from '../../store/user-process/api-actions';
 import { getNearbyOffers, getReviews } from '../../store/offers-data/selectors';
 import { fetchOfferAction } from '../../store/offers-data/api-actions';
+import MainEmpty from '../../components/main/main-empty';
 
 
 store.dispatch(checkAuthAction());
@@ -47,8 +47,8 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
   }, [dispatch, id]);
 
 
-  if (!offerItem || !nearbyOffers || !reviews) {
-    return <NoPage />;
+  if (!offerItem) {
+    return <MainEmpty />;
   }
 
   const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
