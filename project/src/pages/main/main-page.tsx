@@ -12,6 +12,7 @@ import { citiesNames } from '../../const/const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 
 import SortingForm from '../../components/sort-form/sort-form';
+import { getChangeCity, getOffers } from '../../store/offers-data/selectors';
 
 
 type MainPageProps = {
@@ -23,7 +24,7 @@ function MainPage(props: MainPageProps): JSX.Element {
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
-  const offers = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.cityName.city.name));
+  const offers = useAppSelector(getOffers);
 
   const onListItemHover = (offerId: number | null) => {
     const currentOffer = offers.find((offer) => offer.id === offerId);
@@ -31,7 +32,7 @@ function MainPage(props: MainPageProps): JSX.Element {
     setSelectedPoint(currentOffer);
   };
 
-  const currentCity = useAppSelector((item) => item.cityName);
+  const currentCity = useAppSelector(getChangeCity);
 
   return (
     <>

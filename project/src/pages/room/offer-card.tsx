@@ -5,15 +5,16 @@ import { Offer, Offers } from '../../types/offer';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from '../../store';
-import { checkAuthAction, fetchOfferAction } from '../../store/api-actions';
 import { MAX_IMAGES_AMOUNT } from '../../const/const';
 import { useParams } from 'react-router-dom';
 import NoPage from '../404-page/404-page';
 import { inflectWord } from '../../utils/utils';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { checkAuthAction } from '../../store/user-process/api-actions';
+import { getNearbyOffers, getReviews } from '../../store/offers-data/selectors';
+import { fetchOfferAction } from '../../store/offers-data/api-actions';
 
 
 store.dispatch(checkAuthAction());
@@ -27,8 +28,8 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
   const { id } = useParams();
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const offerItem = offers.find((item) => item.id === Number(id));
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const reviews = useAppSelector(getReviews);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
 
   const dispatch = useAppDispatch();
 
@@ -58,7 +59,6 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
   return (
     <>
       <MainPageHeader />
-      {/* <ToastContainer /> */}
       <main className='page__main page__main--property'>
         <section className='property'>
           <div className='property__gallery-container container'>

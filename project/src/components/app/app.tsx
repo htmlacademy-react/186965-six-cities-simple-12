@@ -11,6 +11,8 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getDataLoadingStatus, getOffers } from '../../store/offers-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 
 type AppProps = {
@@ -20,9 +22,9 @@ type AppProps = {
 function App(props: AppProps): JSX.Element {
   const { className } = props;
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const offers = useAppSelector((state) => state.offers);
+  const isOffersDataLoading = useAppSelector(getDataLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offers = useAppSelector(getOffers);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (

@@ -2,16 +2,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { AuthorizationStatus } from '../../const/const';
-import { logoutAction } from '../../store/api-actions';
 import { AppRoute } from '../../const/const';
+import { getAuthorizationStatus, getUserData } from '../../store/user-process/selectors';
+import { logoutAction } from '../../store/user-process/api-actions';
 
 
 function MainPageHeader(): JSX.Element {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector(getUserData);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
 
   return (
 

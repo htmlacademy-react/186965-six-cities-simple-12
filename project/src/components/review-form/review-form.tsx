@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent, Fragment } from 'react';
-import { sendNewReviewAction } from '../../store/api-actions';
+import { sendNewReviewAction } from '../../store/offers-data/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 
@@ -18,8 +18,8 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const MAX_COMMENTS_LENGTH = 300;
 
   const initialState = {
-    rating: 0,
     comment: '',
+    rating: 0
   };
 
   const [formData, setFormData] = useState<Form>(initialState);

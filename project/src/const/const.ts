@@ -114,3 +114,9 @@ export enum APIRoute {
 
 
 export const MAX_IMAGES_AMOUNT = 6;
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  Offer = 'OFFER'
+}

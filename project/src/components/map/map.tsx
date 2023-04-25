@@ -5,6 +5,7 @@ import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
 import { Offer, Offers } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { getChangeCity } from '../../store/offers-data/selectors';
 
 
 type MapProps = {
@@ -28,7 +29,7 @@ function Map(props: MapProps): JSX.Element {
   const { selectedPoint, offers } = props;
   // const offers = useAppSelector((state) => state.offers);
 
-  const location = useAppSelector((state) => state.cityName);
+  const location = useAppSelector(getChangeCity);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
