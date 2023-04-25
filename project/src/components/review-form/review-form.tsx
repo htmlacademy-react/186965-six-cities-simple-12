@@ -59,8 +59,6 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   };
 
 
-
-
   return (
     <form className='reviews__form form' action='#' method='post' onSubmit={handleSubmit}>
       {isReviewError ? <div style={{ color: 'red' }}>Sending feedback failed. Please resend review again</div> : ''}
