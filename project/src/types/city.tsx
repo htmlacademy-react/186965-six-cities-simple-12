@@ -9,4 +9,5 @@ export type City = {
   };
 };
 
+
 export type Cities = City[];

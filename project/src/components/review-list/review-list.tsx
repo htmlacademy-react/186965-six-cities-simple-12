@@ -4,6 +4,8 @@ import Review from '../review/review';
 import ReviewForm from '../review-form/review-form';
 import { AuthorizationStatus } from '../../const/const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getReviews } from '../../store/offers-data/selectors';
+
 
 type ReviewListProps = {
   reviews: Reviews;
@@ -12,10 +14,12 @@ type ReviewListProps = {
 
 function ReviewsList({ reviews, offerId }: ReviewListProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const allReviews = useAppSelector(getReviews);
+
 
   return (
     <section className='property__reviews reviews'>
-      <h2 className='reviews__title'>Reviews · <span className='reviews__amount'>{reviews.length}</span></h2>
+      <h2 className='reviews__title'>Reviews · <span className='reviews__amount'>{allReviews.length}</span></h2>
       <ul className='reviews__list'>
         {reviews.map((review) => <Review review={review} key={review.id} />)}
       </ul>

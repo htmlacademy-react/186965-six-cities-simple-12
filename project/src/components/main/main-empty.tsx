@@ -6,7 +6,7 @@ import { citiesNames } from '../../const/const';
 function MainEmpty(): JSX.Element {
   return (
     <>
-      <Helmet title='No places found'></Helmet>
+      <Helmet title='No places were found'></Helmet>
       <MainPageHeader />
 
       <main className='page__main page__main--index page__main--index-empty'>

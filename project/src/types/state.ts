@@ -16,7 +16,7 @@ export type OffersData = {
   offers: Offer[];
   selectedSort: string;
   isOffersDataLoading: boolean;
-  error: string | null;
+  error: boolean;
   user: UserData | null;
   reviews: Reviews;
   nearbyOffers: Offers;

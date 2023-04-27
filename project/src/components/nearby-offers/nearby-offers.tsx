@@ -4,7 +4,6 @@ import PlaceCard from '../offer-card/place-card';
 type NearbyPlaceCardProps = {
   offer: Offer;
   id: number;
-  onMouseOverHandler: (id: number | null) => void;
   className: string;
 }
 

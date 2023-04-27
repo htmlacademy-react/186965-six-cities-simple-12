@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getChangeCity, getOffers } from '../../store/offers-data/selectors';
 import PlaceCardList from '../../components/offer-list/place-cards-list';
@@ -15,18 +15,13 @@ type MainContentProps = {
 
 
 function MainContent({ className }: MainContentProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<Offer | null>(null);
 
   const allOffers = useAppSelector(getOffers);
 
   const currentCity = useAppSelector(getChangeCity);
 
   const offers = allOffers.filter((item) => item.city.name === currentCity.city.name);
-
-  const onListItemHover = useCallback((offerId: number | null) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
-    setSelectedPoint(currentOffer);
-  }, [offers]);
 
 
   return (
@@ -44,13 +39,11 @@ function MainContent({ className }: MainContentProps): JSX.Element {
             <b className='places__found'>{offers.length} places to stay in {currentCity.city.name}</b>
             <SortingForm />
             <div className='cities__places-list places__list tabs__content'>
-              <PlaceCardList offers={offers} className={className} onMouseOverHandler={onListItemHover} />
+              <PlaceCardList offers={offers} className={className} onHoverCard={setSelectedPoint} />
             </div>
           </section>
           <div className='cities__right-section'>
-            <section className='cities__map map'>
-              <Map selectedPoint={selectedPoint} offers={offers} />
-            </section>
+            <Map selectedPoint={selectedPoint} offers={offers} className={'cities__map'} city={currentCity} />
           </div>
         </div>
       </div>

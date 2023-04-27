@@ -1,17 +1,17 @@
 import { useState, MouseEvent } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { useDispatch } from 'react-redux';
 import { sortingOptions } from '../../const/const';
 import { SortingOption } from '../../types/sort';
 import { getSelectedSorting } from '../../store/offers-data/selectors';
-import { sortOffers } from '../../store/offers-data/offers-data';
+import { sortOffers } from '../../store/offers-data/offers-data.slice';
 import { memo } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 function SortingForm(): JSX.Element {
   const [isSortListOpened, setIsSortListOpened] = useState(false);
 
   const selectedSort = useAppSelector(getSelectedSorting);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
 
   const onSortListClick = (evt: MouseEvent<HTMLElement>) => {
@@ -30,7 +30,12 @@ function SortingForm(): JSX.Element {
       </span>
       <ul className={`places__options places__options--custom ${isSortListOpened ? 'places__options--opened' : ''}`}>
         {sortingOptions.map((option) => (
-          <li className={`places__option ${option === selectedSort ? 'places__option--active' : ''}`} tabIndex={0} key={option} onClick={onSortListClick}>{option}</li>
+          <li
+            className={`places__option ${option === selectedSort ? 'places__option--active' : ''}`}
+            tabIndex={0} key={option}
+            onClick={onSortListClick}
+          >{option}
+          </li>
         )
         )}
 

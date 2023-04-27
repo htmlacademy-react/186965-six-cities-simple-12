@@ -1,9 +1,9 @@
 import MainPageHeader from '../../components/header/header';
 import ReviewsList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
-import { Offer, Offers } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import NearbyPlaceCardList from '../../components/nearby-offers-list/nearby-offers-list';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from '../../store';
@@ -14,7 +14,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { checkAuthAction } from '../../store/user-process/api-actions';
 import { getNearbyOffers, getReviews } from '../../store/offers-data/selectors';
 import { fetchOfferAction } from '../../store/offers-data/api-actions';
-import MainEmpty from '../../components/main/main-empty';
+// import MainEmpty from '../../components/main/main-empty';
 
 
 store.dispatch(checkAuthAction());
@@ -26,34 +26,21 @@ type MainPageHeaderProps = {
 
 function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
   const { id } = useParams();
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const offerItem = offers.find((item) => item.id === Number(id));
-  const reviews = useAppSelector(getReviews);
+  const allReviews = useAppSelector(getReviews);
+  const reviews = allReviews.slice(0, 10);
   const nearbyOffers = useAppSelector(getNearbyOffers);
+  const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
+
+  const maxImagedAmount = images.slice(0, MAX_IMAGES_AMOUNT);
 
   const dispatch = useAppDispatch();
-
-  const onListItemHover = (offerItemId: number | null) => {
-    const selectedOffer = offers.find((offer) => offer.id === offerItemId);
-    setSelectedPoint(selectedOffer);
-
-  };
-
 
   useEffect(() => {
     if (id) {
       dispatch(fetchOfferAction(Number(id)));
     }
   }, [dispatch, id]);
-
-
-  if (!offerItem) {
-    return <MainEmpty />;
-  }
-
-  const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
-
-  const maxImagedAmount = images.slice(0, MAX_IMAGES_AMOUNT);
 
 
   return (
@@ -65,7 +52,7 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
             <div className='property__gallery'>
               {maxImagedAmount.map((image) => (
                 <div className='property__image-wrapper' key={image}>
-                  <img className='property__image' src={image} alt='Photo studio' />
+                  <img className='property__image' src={image} alt={`${title}`} />
                 </div>
               ))}
             </div>
@@ -116,7 +103,7 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
               <div className='property__host'>
                 <h2 className='property__host-title'>Meet the host</h2>
                 <div className='property__host-user user'>
-                  <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
+                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}} user__avatar-wrapper`}>
                     <img className='property__avatar user__avatar' src={host.avatarUrl} width='74' height='74' alt='Host avatar' />
                   </div>
                   <span className='property__user-name'>
@@ -132,14 +119,14 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
             </div>
           </div>
           <section className='property__map map'>
-            <Map selectedPoint={selectedPoint} offers={nearbyOffers} />
+            <Map selectedPoint={offerItem} offers={[...nearbyOffers, offerItem]} city={offerItem} className={'property__map'} />
           </section>
         </section>
         <div className='container'>
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              <NearbyPlaceCardList offers={nearbyOffers} className={className} onMouseOverHandler={onListItemHover} />
+              <NearbyPlaceCardList offers={nearbyOffers} className={className} />
             </div>
           </section>
         </div>

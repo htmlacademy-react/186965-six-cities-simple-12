@@ -2,7 +2,7 @@
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getSelectedCity } from '../../store/offers-data/selectors';
-import { changeCity } from '../../store/offers-data/offers-data';
+import { changeCity } from '../../store/offers-data/offers-data.slice';
 import { City } from '../../types/city';
 import { Link } from 'react-router-dom';
 
@@ -14,8 +14,8 @@ function CityItem({ cityTarget }: CityItemProps): JSX.Element {
   const currentCity = useAppSelector(getSelectedCity);
   const dispatch = useAppDispatch();
 
-  const onChangeCity = (cit: City) => {
-    dispatch(changeCity(cit));
+  const onChangeCity = (city: City) => {
+    dispatch(changeCity(city));
   };
 
   return (

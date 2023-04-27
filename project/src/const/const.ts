@@ -120,3 +120,9 @@ export enum NameSpace {
   User = 'USER',
   Offer = 'OFFER'
 }
+
+
+export const ReviewNumbers = {
+  MIN_COMMENTS_LENGTH: 50,
+  MAX_COMMENTS_LENGTH: 300,
+} as const;
