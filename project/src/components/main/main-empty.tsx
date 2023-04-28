@@ -1,7 +1,7 @@
 import MainPageHeader from '../header/header';
 import { Helmet } from 'react-helmet-async';
 import CitiesList from '../cities-list/cities-list';
-import { citiesNames } from '../../const/const';
+// import { citiesNames } from '../../const/const';
 
 function MainEmpty(): JSX.Element {
   return (
@@ -13,7 +13,7 @@ function MainEmpty(): JSX.Element {
         <h1 className='visually-hidden'>Cities</h1>
         <div className='tabs'>
           <section className='locations container'>
-            <CitiesList cities={citiesNames} />
+            <CitiesList />
           </section>
         </div>
         <div className='cities'>

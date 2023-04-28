@@ -2,7 +2,7 @@ import { AuthorizationStatus } from '../const/const';
 import { store } from '../store/index';
 import { Offers, Offer } from './offer';
 import { Reviews } from './review';
-import { City } from './city';
+import { CityName } from './city';
 import { UserData } from './user-data';
 import { SortingOption } from './sort';
 
@@ -12,7 +12,7 @@ export type UserProcess = {
 }
 
 export type OffersData = {
-  cityName: City;
+  cityName: CityName;
   offers: Offer[];
   selectedSort: string;
   isOffersDataLoading: boolean;
@@ -26,7 +26,7 @@ export type OffersData = {
 
 export type OffersProcess = {
   offers: Offers;
-  city: City;
+  city: CityName;
   selectedSort: SortingOption;
 }
 

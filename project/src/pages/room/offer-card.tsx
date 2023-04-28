@@ -12,10 +12,10 @@ import { useParams } from 'react-router-dom';
 import { inflectWord } from '../../utils/utils';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { checkAuthAction } from '../../store/user-process/api-actions';
-import { getNearbyOffers, getReviews } from '../../store/offers-data/selectors';
+import { getDataLoadingStatus, getError, getNearbyOffers, getReviews } from '../../store/offers-data/selectors';
 import { fetchOfferAction } from '../../store/offers-data/api-actions';
-// import MainEmpty from '../../components/main/main-empty';
-
+import { ThreeDots } from 'react-loader-spinner';
+import NoPage from '../404-page/404-page';
 
 store.dispatch(checkAuthAction());
 
@@ -30,9 +30,8 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
   const allReviews = useAppSelector(getReviews);
   const reviews = allReviews.slice(0, 10);
   const nearbyOffers = useAppSelector(getNearbyOffers);
-  const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
-
-  const maxImagedAmount = images.slice(0, MAX_IMAGES_AMOUNT);
+  const isDataLoading = useAppSelector(getDataLoadingStatus);
+  const isError = useAppSelector(getError);
 
   const dispatch = useAppDispatch();
 
@@ -42,6 +41,23 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
     }
   }, [dispatch, id]);
 
+
+  if (isDataLoading) {
+    return (<ThreeDots height='80' width='80' radius='9' color='#4481c3' ariaLabel='three-dots-loading' wrapperClass='loader' visible />);
+  }
+
+  if (isError) {
+    return <NoPage />;
+  }
+
+  if (!offerItem) {
+    return <NoPage />;
+  }
+
+
+  const { images, isPremium, title, rating, type, bedrooms, maxAdults, goods, price, host, description } = offerItem;
+
+  const maxImagedAmount = images.slice(0, MAX_IMAGES_AMOUNT);
 
   return (
     <>
@@ -103,7 +119,7 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
               <div className='property__host'>
                 <h2 className='property__host-title'>Meet the host</h2>
                 <div className='property__host-user user'>
-                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}} user__avatar-wrapper`}>
+                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
                     <img className='property__avatar user__avatar' src={host.avatarUrl} width='74' height='74' alt='Host avatar' />
                   </div>
                   <span className='property__user-name'>
@@ -119,7 +135,7 @@ function OfferCard({ offers, className }: MainPageHeaderProps): JSX.Element {
             </div>
           </div>
           <section className='property__map map'>
-            <Map selectedPoint={offerItem} offers={[...nearbyOffers, offerItem]} city={offerItem} className={'property__map'} />
+            <Map selectedPoint={offerItem} offers={[...nearbyOffers, offerItem]} city={offerItem.city} className={'property__map'} />
           </section>
         </section>
         <div className='container'>

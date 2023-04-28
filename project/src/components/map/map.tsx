@@ -4,10 +4,8 @@ import useMap from '../../hooks/useMap';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
 import { Offer, Offers } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
-// import { useAppSelector } from '../../hooks/use-app-selector';
-// import { getChangeCity } from '../../store/offers-data/selectors';
 import { memo } from 'react';
-import { City } from '../../types/city';
+import { City, CityName } from '../../types/city';
 
 
 type MapProps = {
@@ -31,27 +29,27 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
   const { selectedPoint, offers, className, city } = props;
-  const [currentCity, setCurrentCity] = useState<City>(city);
+  const [currentCity, setCurrentCity] = useState<CityName>(city.name);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      if (currentCity.city.name !== city.city.name) {
+      if (currentCity !== city.name) {
         map.flyTo(
           [
-            city.city.location.latitude,
-            city.city.location.longitude,
+            city.location.latitude,
+            city.location.longitude,
           ],
-          city.city.location.zoom,
+          city.location.zoom,
           {
             animate: true,
             duration: 1
           }
         );
 
-        setCurrentCity(city);
+        setCurrentCity(city.name);
       }
 
       const points = offers.map(

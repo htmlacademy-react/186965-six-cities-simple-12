@@ -11,6 +11,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getOffers } from '../../store/offers-data/selectors';
+import ScrollTop from '../scroll-to-top/scroll-to-top';
 
 
 type AppProps = {
@@ -26,6 +27,7 @@ function App(props: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
+        <ScrollTop/>
         <Routes>
           <Route path={AppRoute.Main} element={<MainPage className={className} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />

@@ -1,15 +1,12 @@
 import CityItem from '../city-name/city-name';
-import { Cities } from '../../types/city';
 import { memo } from 'react';
+import { citiesNames } from '../../const/const';
 
-type CitiesListProps = {
-  cities: Cities;
-}
 
-function CitiesList({ cities }: CitiesListProps): JSX.Element {
+function CitiesList(): JSX.Element {
   return (
     <ul className='locations__list tabs__list'>
-      {cities.map((city) => <CityItem key={city.city.name} cityTarget={city} />)}
+      {citiesNames.map((city) => <CityItem key={city} cityTarget={city} />)}
     </ul>
   );
 }
