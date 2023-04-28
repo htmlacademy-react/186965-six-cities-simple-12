@@ -3,14 +3,14 @@ import { fetchOffersAction, fetchOfferAction, sendNewReviewAction } from './api-
 import { OffersData } from '../../types/state';
 import { NameSpace, DEFAULT_CITY, DEFAULT_SORTING } from '../../const/const';
 import { SortingOption } from '../../types/sort';
-import { City } from '../../types/city';
+import { CityName } from '../../types/city';
 
 const initialState: OffersData = {
   cityName: DEFAULT_CITY,
   offers: [],
   selectedSort: DEFAULT_SORTING,
   isOffersDataLoading: false,
-  error: null,
+  error: false,
   user: null,
   reviews: [],
   nearbyOffers: [],
@@ -23,26 +23,12 @@ export const offersData = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    changeCity: (state, action: PayloadAction<City>) => {
-      state.cityName.city.name = action.payload.city.name;
-      state.cityName.city.location.latitude = action.payload.city.location.latitude;
-      state.cityName.city.location.longitude = action.payload.city.location.longitude;
+    changeCity: (state, action: PayloadAction<CityName>) => {
+      state.cityName = action.payload;
       state.selectedSort = DEFAULT_SORTING;
     },
     sortOffers: (state, action: PayloadAction<SortingOption>) => {
       state.selectedSort = action.payload;
-      state.offers = state.offers.sort((a, b) => {
-        switch(state.selectedSort) {
-          case 'Price: low to high':
-            return a.price - b.price;
-          case 'Price: high to low':
-            return b.price - a.price;
-          case 'Top rated first':
-            return b.rating - a.rating;
-          default:
-            return 0;
-        }
-      });
     }
   },
   extraReducers(builder) {
@@ -56,41 +42,41 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
-
+        state.error = true;
       })
       .addCase(fetchOfferAction.pending, (state) => {
-        state.error = null;
+        state.error = false;
         state.isOffersDataLoading = true;
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         const [ comments, nearby] = action.payload;
         state.nearbyOffers = nearby;
-        state.reviews = [...comments].sort((a, b) => {
+        state.reviews = comments.sort((a, b) => {
           if (a.date < b.date) {
             return 1;
           }
           return -1;
-        }).slice(0, 10);
+        });
         state.isOffersDataLoading = false;
       })
       .addCase(fetchOfferAction.rejected, (state) => {
-        state.error = 'There has been an error';
+        state.error = true;
         state.isOffersDataLoading = false;
       })
       .addCase(sendNewReviewAction.pending, (state) => {
         state.isSendingReviewStatus = true;
       })
       .addCase(sendNewReviewAction.fulfilled, (state, action) => {
-        state.reviews = [...action.payload].sort((a, b) => {
+        state.reviews = action.payload.sort((a, b) => {
           if (a.date < b.date) {
             return 1;
           }
           return -1;
-        }).slice(0, 10);
+        });
         state.isSendingReviewStatus = false;
       })
       .addCase(sendNewReviewAction.rejected, (state) => {
-        state.isSendingReviewStatus = true;
+        state.isSendingReviewStatus = false;
         state.isSendingReviewError = true;
       });
   }

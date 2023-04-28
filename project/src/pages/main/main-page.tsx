@@ -16,7 +16,7 @@ function MainPage(props: MainPageProps): JSX.Element {
   const isOfferDataLoading = useAppSelector(getDataLoadingStatus);
 
   if (isOfferDataLoading) {
-    return (<ThreeDots height='80' width='80' radius='9' color='#4fa94d' ariaLabel='three-dots-loading' wrapperStyle={{}} visible />);
+    return (<ThreeDots height='80' width='80' radius='9' color='#4481c3' ariaLabel='three-dots-loading' wrapperClass='loader' visible />);
   }
 
   return (

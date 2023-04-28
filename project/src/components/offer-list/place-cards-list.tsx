@@ -1,20 +1,20 @@
 
 import PlaceCard from '../offer-card/place-card';
-import { Offers } from '../../types/offer';
+import { Offers, Offer } from '../../types/offer';
 
 
 type PlaceCardsListProps = {
   offers: Offers;
   className: string;
-  onMouseOverHandler: (id: number | null) => void;
+  onHoverCard?: (offer: Offer | null) => void;
 }
 
 function PlaceCardsList(props: PlaceCardsListProps): JSX.Element {
-  const { offers, className, onMouseOverHandler } = props;
+  const { offers, className, onHoverCard } = props;
 
   return (
     <>
-      {offers.map((offer) => <PlaceCard offer={offer} key={offer.id} id={offer.id} onMouseOverHandler={onMouseOverHandler} className={`cities__card ${className}`} />)}
+      {offers.map((offer) => <PlaceCard offer={offer} key={offer.id} id={offer.id} onHoverCard={onHoverCard} className={`cities__card ${className}`} />)}
     </>
   );
 }

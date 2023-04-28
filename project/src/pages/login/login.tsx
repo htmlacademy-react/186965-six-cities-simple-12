@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { loginAction } from '../../store/user-process/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { getChangeCity } from '../../store/offers-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { redirectToRoute } from '../../store/action';
+import { checkAuthAction } from '../../store/user-process/api-actions';
 
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const selectedCity = useAppSelector(getChangeCity);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
@@ -30,8 +35,20 @@ function LoginPage(): JSX.Element {
     }
   };
 
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Unknown) {
+      dispatch(checkAuthAction());
+    }
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [authorizationStatus, dispatch]);
+
+
   return (
-    <>
+    <section className='page page--gray page--login'>
       <Helmet title='Log in'></Helmet>
       <header className="header">
         <div className="container">
@@ -55,7 +72,7 @@ function LoginPage(): JSX.Element {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref={passwordRef} />
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref={passwordRef} pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$" title="Password must contain at least one letter and a number" />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
@@ -63,13 +80,13 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="#">
-                <span>{selectedCity.city.name}</span>
+                <span>{selectedCity}</span>
               </Link>
             </div>
           </section>
         </div>
       </main>
-    </>
+    </section>
 
   );
 }
