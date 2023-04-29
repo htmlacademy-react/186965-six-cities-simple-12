@@ -1,13 +1,11 @@
-import MainPageHeader from '../header/header';
+
 import { Helmet } from 'react-helmet-async';
 import CitiesList from '../cities-list/cities-list';
-// import { citiesNames } from '../../const/const';
 
 function MainEmpty(): JSX.Element {
   return (
     <>
       <Helmet title='No places were found'></Helmet>
-      <MainPageHeader />
 
       <main className='page__main page__main--index page__main--index-empty'>
         <h1 className='visually-hidden'>Cities</h1>
