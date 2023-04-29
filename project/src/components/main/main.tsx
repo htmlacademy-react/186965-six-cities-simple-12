@@ -6,7 +6,6 @@ import Map from '../../components/map/map';
 import { Offer } from '../../types/offer';
 
 import CitiesList from '../../components/cities-list/cities-list';
-// import { citiesNames } from '../../const/const';
 import SortingForm from '../../components/sort-form/sort-form';
 import { DEFAULT_SORTING } from '../../const/const';
 
