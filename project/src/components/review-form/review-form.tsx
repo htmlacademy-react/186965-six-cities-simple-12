@@ -43,7 +43,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   };
 
   const isFormValid = () => {
-    const isTextValid = formData.comment.length > ReviewNumbers.MIN_COMMENTS_LENGTH && formData.comment.length < ReviewNumbers.MAX_COMMENTS_LENGTH;
+    const isTextValid = formData.comment.trim().length > ReviewNumbers.MIN_COMMENTS_LENGTH && formData.comment.trim().length;
     const isRated = Number(formData.rating) > 0;
 
     return isTextValid && isRated;
